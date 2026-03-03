@@ -1,6 +1,9 @@
 const jwt = require('jsonwebtoken')
 const StatusCode = require("../utils/status-code")
 const foodPartnerModel = require("../models/foodPartner-model")
+const userModel = require("../models/user_model")
+
+// middleware for authenticate food partner
 const authFoodPartnerMiddleware = async(req,res,next)=>{
 const token = req.cookies.token
 if(!token){
@@ -17,4 +20,19 @@ try {
 }
 }
 
-module.exports = {authFoodPartnerMiddleware};
+// middleware for authenticate a user
+const authUserMiddleware = async(req,res,next)=>{
+    const token = req.cookies.token
+    if(!token){
+        return res.status(StatusCode.UNAUTHORIZED).json({message:"Please login first"})
+    }
+    try {
+        const decoded = jwt.verify(token,process.env.JWT_SECRET)
+        const user = await userModel.findById(decoded.id)
+        req.user = user
+        next()
+    } catch (error) {
+        return res.status(StatusCode.UNAUTHORIZED).json({message:"Invalid token"})
+    }
+}
+module.exports = {authFoodPartnerMiddleware ,authUserMiddleware};

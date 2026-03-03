@@ -25,4 +25,13 @@ const createFood = async (req, res) => {
   }
 };
 
-module.exports = { createFood };
+// get food feed
+const getFoodItems = async(req,res)=>{
+  try {
+    
+  } catch (error) {
+    
+  }
+}
+
+module.exports = { createFood, getFoodItems };
