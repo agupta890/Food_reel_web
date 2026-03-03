@@ -121,8 +121,8 @@ const Logout = async (req, res) => {
 // register food partner
 const registerFoodPartner = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
-    if (!name || !email || !password) {
+     const { name, email, password, phone, address, contactName } = req.body;
+    if (!name || !email || !password || !phone || !address || !contactName) {
       return res
         .status(StatusCode.CONFLICT)
         .json({ message: "All fields are required" });
@@ -144,6 +144,9 @@ const registerFoodPartner = async (req, res) => {
       name,
       email: normalizeEmail,
       password: hash_password,
+      phone,
+        address,
+        contactName
     });
     // generate the token
     const token = jwt.sign({ id: foodPartner._id }, process.env.JWT_SECRET, {
@@ -160,9 +163,12 @@ const registerFoodPartner = async (req, res) => {
       .json({
         message: "Food partner register succesfully",
         data: {
-          id: foodPartner._id,
-          name: foodPartner.name,
-          email: foodPartner.email,
+         _id: foodPartner._id,
+            email: foodPartner.email,
+            name: foodPartner.name,
+            address: foodPartner.address,
+            contactName: foodPartner.contactName,
+            phone: foodPartner.phone
         },
       });
   } catch (error) {
