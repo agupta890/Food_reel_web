@@ -26,12 +26,20 @@ const createFood = async (req, res) => {
 };
 
 // get food feed
-const getFoodItems = async(req,res)=>{
+const getFoodItems = async (req, res) => {
   try {
-    
+    const foodItems = await foodModel.find();
+
+    return res.status(StatusCode.OK).json({
+      message: "Food items fetched successfully",
+      data: foodItems,
+    });
   } catch (error) {
-    
+
+    return res.status(StatusCode.INTERNAL_SERVER_ERROR).json({
+      message: "Internal Server Error",
+    });
   }
-}
+};
 
 module.exports = { createFood, getFoodItems };
