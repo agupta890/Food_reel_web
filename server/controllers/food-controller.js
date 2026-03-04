@@ -21,7 +21,7 @@ const createFood = async (req, res) => {
   } catch (error) {
     return res
       .status(StatusCode.INTERNAL_SERVER_ERROR)
-      .json({ message: "Internal server error" });
+      .json({ message: "Internal server error",error:error.message});
   }
 };
 
@@ -41,5 +41,4 @@ const getFoodItems = async (req, res) => {
     });
   }
 };
-
-module.exports = { createFood, getFoodItems };
+module.exports = { createFood,getFoodItems};
