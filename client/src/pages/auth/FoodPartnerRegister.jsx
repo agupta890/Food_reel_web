@@ -40,7 +40,7 @@ const FoodPartnerRegister = () => {
        email:"",
        password: "",
        address: "",})
-        navigate("/create-food");
+        navigate("/food-partner/login");
        
       
     } catch (error) {
