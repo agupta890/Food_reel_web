@@ -13,11 +13,19 @@ const foodSchema = new mongoose.Schema({
         type:String,
         required:true
     },
+     likeCount: {
+        type: Number,
+        default: 0
+    },
+    savesCount: {
+        type: Number,
+        default: 0
+    },
     foodPartner:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"foodparnter"
     }
 })
 
-const foodModel = mongoose.model("foodItem",foodSchema)
+const foodModel = mongoose.model("food",foodSchema)
 module.exports = foodModel
