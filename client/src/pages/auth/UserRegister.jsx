@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 const UserRegister = () => {
 
     const navigate = useNavigate();
+    const Base_Url = import.meta.env.VITE_API_URL
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -17,7 +18,7 @@ const UserRegister = () => {
         const password = e.target.password.value;
 
 
-        const response = await axios.post("http://localhost:3000/api/auth/user/register", {
+        const response = await axios.post(`${Base_Url}/auth/user/register`, {
             fullName: firstName + " " + lastName,
             email,
             password
