@@ -29,7 +29,7 @@ const UserRegister = () => {
 
         console.log(response.data);
 
-        navigate("/")
+        navigate("/home")
 
     };
 

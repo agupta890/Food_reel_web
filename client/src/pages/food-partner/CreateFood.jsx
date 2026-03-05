@@ -70,7 +70,7 @@ const onSubmit = async (e) => {
         setMessage("Food created successfully 🎉");
 
         setTimeout(() => {
-            navigate("/");
+            navigate("/home");
         }, 1500);
 
     } catch (error) {
