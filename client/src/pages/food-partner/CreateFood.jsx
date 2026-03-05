@@ -9,6 +9,8 @@ const CreateFood = () => {
     const [ videoFile, setVideoFile ] = useState(null);
     const [ videoURL, setVideoURL ] = useState('');
     const [ fileError, setFileError ] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [message, setMessage] = useState("");
     const fileInputRef = useRef(null);
 
     const navigate = useNavigate();
@@ -47,26 +49,37 @@ const CreateFood = () => {
     };
 
     const openFileDialog = () => fileInputRef.current?.click();
+const onSubmit = async (e) => {
+    e.preventDefault();
 
-    const onSubmit = async (e) => {
-        e.preventDefault();
+    try {
+        setLoading(true);
+        setMessage("");
 
         const formData = new FormData();
-
         formData.append('name', name);
         formData.append('description', description);
         formData.append("video", videoFile);
 
         const response = await axios.post(`${Base_Url}/food`, formData, {
             withCredentials: true,
-        })
+        });
 
         console.log(response.data);
-        navigate("/"); // Redirect to home or another page after successful creation
-        // Optionally reset
-        // setName(''); setDescription(''); setVideoFile(null);
-    };
 
+        setMessage("Food created successfully 🎉");
+
+        setTimeout(() => {
+            navigate("/");
+        }, 1500);
+
+    } catch (error) {
+        console.error(error);
+        setMessage("Something went wrong ❌");
+    } finally {
+        setLoading(false);
+    }
+};
     const isDisabled = useMemo(() => !name.trim() || !videoFile, [ name, videoFile ]);
 
     return (
@@ -157,9 +170,9 @@ const CreateFood = () => {
                     </div>
 
                     <div className="form-actions">
-                        <button className="btn-primary" type="submit" disabled={isDisabled}>
-                            Save Food
-                        </button>
+                        <button className="btn-primary" type="submit" disabled={isDisabled || loading}>
+    {loading ? "Uploading..." : "Save Food"}
+</button>
                     </div>
                 </form>
             </div>

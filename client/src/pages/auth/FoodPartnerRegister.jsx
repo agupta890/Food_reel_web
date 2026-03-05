@@ -8,9 +8,11 @@ const FoodPartnerRegister = () => {
 
   const navigate = useNavigate();
   const Base_Url = import.meta.env.VITE_API_URL
+ 
   
   const handleSubmit = (e) => { 
     e.preventDefault();
+    
 
     const businessName = e.target.businessName.value;
     const contactName = e.target.contactName.value;
